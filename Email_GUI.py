@@ -53,7 +53,7 @@ def spamEmailsButton():
     repeat = int(number_of_times.get())
     email_recipient = email.get()
     email_recipient_list = email_recipient.split(",")
-    for i in range(1,repeat):
+    for i in range(0,repeat):
         sendemail(from_addr    = "humanreal20@gmail.com",
                   to_addr_list = email_recipient_list,
                   # cc_addr_list = [],
@@ -77,17 +77,7 @@ def handle_focus_in(_):
     email.delete(0, tk.END)
     email.config(fg='black')
 
-'''
-def handle_focus_out(_):
-    email.delete(0, tk.END)
-    email.config(fg='grey')
-    email.insert(0, "Enter Email Address")
 
-def handle_enter(txt):
-    print(email.get())
-    # handle_focus_out('dummy')
-    fr_buttons.foucs()
-'''
 window = tk.Tk()
 window.title("Email Editor")
 
@@ -96,37 +86,28 @@ window.columnconfigure(1, minsize=300, weight=1)
 
 txt_edit = tk.Text(window, height=30)
 fr_buttons = tk.Frame(window)
-# email = tk.Entry(fr_buttons)
-label = tk.Label(window, text="User: ")
-# label.pack(side="left")
 
-email = tk.Entry(window, bd=1)
-email.insert(0, 'Enter Recieving Emails: ')
-email.bind('<FocusIn>', on_entry_click)
-email.bind('<FocusOut>', on_focusout)
+
+email = tk.Entry(fr_buttons, bd=1) #Assigning special email box to frame
+email.insert(0, 'Enter Recieving Emails: ') #Box prompt - if changed also change in functions
+email.bind('<FocusIn>', on_entry_click) #Command executed when focus is gained
+email.bind('<FocusOut>', on_focusout)  #Command executed when focus is lost
 email.config(fg = 'grey')
-# email.pack(side="left")
 
-# email = tk.Entry(fr_buttons, bg='white', fg='grey')
-# email.bind("<FocusIn>", handle_focus_in)
-# email.bind("<FocusOut>", handle_focus_out)
-# email.bind("<Return>", handle_enter)
-subject = tk.Entry(fr_buttons)
-number_of_times = tk.Entry(fr_buttons)
+
+subject = tk.Entry(fr_buttons) #Assign buttons and entry boxes a frame
+number_of_times = tk.Entry(fr_buttons) #
 btn_send = tk.Button(fr_buttons, text="Send", command = spamEmailsButton, width = 60)
-btn_save = tk.Button(fr_buttons, text="Save As...", command = save_file)
+btn_save = tk.Button(fr_buttons, text="Save As...", command = save_file) #Assign buttons and entry boxes a frame ends here
 
-btn_send.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
+btn_send.grid(row=0, column=0, sticky="ew", padx=5, pady=5) #Sets the order of buttons in the first column of the grrid
 btn_save.grid(row=1, column=0, sticky="ew", padx=5, pady=5)
 email.grid(row=2, column=0, sticky="ew",padx=5, pady=5)
 subject.grid(row=3, column=0, sticky="ew",padx=5, pady=5)
 number_of_times.grid(row=4, column=0,sticky="ew",padx=5, pady=5)
-label.grid(row=5, column=0,sticky="ew",padx=5)
 
-fr_buttons.grid(row=0, column=0, sticky="ns")
-txt_edit.grid(row=0, column=1, sticky="nw",padx=5, pady=5)
-
-# email.insert(0, "Enter Email Address")
+fr_buttons.grid(row=0, column=0, sticky="ns") #Sets the frame 'fr_buttons' to the first column of the grid
+txt_edit.grid(row=0, column=1, sticky="nw",padx=5, pady=5) #Sets the order of buttons in the second column of the grrid
 
 
 
