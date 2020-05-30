@@ -78,6 +78,36 @@ def handle_focus_in(_):
     email.config(fg='black')
 
 
+def on_entry_click_sub(event):
+    """function that gets called whenever entry is clicked"""
+    if subject.get() == 'Enter Subject: ':
+       subject.delete(0, "end") # delete all the text in the entry
+       subject.insert(0, '') #Insert blank for user input
+       subject.config(fg = 'black')
+def on_focusout_sub(event):
+    if subject.get() == '':
+        subject.insert(0, 'Enter Subject: ')
+        subject.config(fg = 'grey')
+def handle_focus_in_sub(_):
+    subject.delete(0, tk.END)
+    subject.config(fg='black')
+
+    
+def on_entry_click_times(event):
+    """function that gets called whenever entry is clicked"""
+    if number_of_times.get() == 'Enter Number Of Times To Send Email: ':
+       number_of_times.delete(0, "end") # delete all the text in the entry
+       number_of_times.insert(0, '') #Insert blank for user input
+       number_of_times.config(fg = 'black')
+def on_focusout_times(event):
+    if number_of_times.get() == '':
+        number_of_times.insert(0, 'Enter Number Of Times To Send Email: ')
+        number_of_times.config(fg = 'grey')
+def handle_focus_in_times(_):
+    number_of_times.delete(0, tk.END)
+    number_of_times.config(fg='black')
+
+
 window = tk.Tk()
 window.title("Email Editor")
 
@@ -96,7 +126,18 @@ email.config(fg = 'grey')
 
 
 subject = tk.Entry(fr_buttons) #Assign buttons and entry boxes a frame
-number_of_times = tk.Entry(fr_buttons) #
+subject.insert(0, 'Enter Subject: ') #Box prompt - if changed also change in functions
+subject.bind('<FocusIn>', on_entry_click_sub) #Command executed when focus is gained
+subject.bind('<FocusOut>', on_focusout_sub)  #Command executed when focus is lost
+subject.config(fg = 'grey')
+
+
+number_of_times = tk.Entry(fr_buttons) #Assign buttons and entry boxes a frame
+number_of_times.insert(0, 'Enter Number Of Times To Send Email: ') #Box prompt - if changed also change in functions
+number_of_times.bind('<FocusIn>', on_entry_click_times) #Command executed when focus is gained
+number_of_times.bind('<FocusOut>', on_focusout_times)  #Command executed when focus is lost
+number_of_times.config(fg = 'grey')
+
 btn_send = tk.Button(fr_buttons, text="Send", command = spamEmailsButton, width = 60)
 btn_save = tk.Button(fr_buttons, text="Save As...", command = save_file) #Assign buttons and entry boxes a frame ends here
 
