@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 import smtplib
+from readEmailCredentials import readCredentials
+
 
 
 def open_file():
@@ -48,19 +50,21 @@ def sendemail(from_addr, to_addr_list,
 
 
 def spamEmailsButton():
+    # readCredential call here
+    sending_email, password = readCredentials("Credentials.txt")
     text = txt_edit.get(1.0, tk.END)
     email_subject =  subject.get()
     repeat = int(number_of_times.get())
     email_recipient = email.get()
     email_recipient_list = email_recipient.split(",")
     for i in range(0,repeat):
-        sendemail(from_addr    = "humanreal20@gmail.com",
+        sendemail(from_addr    = sending_email,
                   to_addr_list = email_recipient_list,
                   # cc_addr_list = [],
                   subject      = email_subject,
                   message      = text,
-                  login        = "humanreal20@gmail.com",
-                  password     = "TotallyReal999")
+                  login        = sending_email,
+                  password     = password)
 
 
 def on_entry_click(event):
