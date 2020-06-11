@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 import smtplib
 from readEmailCredentials import readCredentials
-
+from tkinter import ttk
 
 
 def open_file():
@@ -40,7 +40,6 @@ def sendemail(from_addr, to_addr_list,
     # header += 'Cc: %s\n' % ','.join(cc_addr_list)
     header += 'Subject: %s\n\n' % subject
     message = header + message
-
     server = smtplib.SMTP(smtpserver)
     server.starttls()
     server.login(login, password)
@@ -48,15 +47,36 @@ def sendemail(from_addr, to_addr_list,
     server.quit()
     return problems
 
+def popupmsg(msg):
+    popup = tk.Tk()
+    popup.wm_title("!")
+    label = ttk.Label(popup, text=msg)
+    label.pack(side="top", fill="x", pady=10)
+    B1 = ttk.Button(popup, text="Okay", command = popup.destroy)
+    B1.pack()
+    popup.mainloop()
 
 def spamEmailsButton():
     # readCredential call here
     sending_email, password = readCredentials("Credentials.txt")
     text = txt_edit.get(1.0, tk.END)
     email_subject =  subject.get()
-    repeat = int(number_of_times.get())
+
+    repeat = number_of_times.get()
+    try:
+        repeat = int(repeat)
+    except ValueError:
+        popupmsg('Number of times must be an integer written like this: "8"')
+        raise Exception('User dumb')
+
     email_recipient = email.get()
     email_recipient_list = email_recipient.split(",")
+    for person in email_recipient_list:
+        try:
+            assert "@" in person
+            assert "." in person
+        except AssertionError:
+            popupmsg('Please use the correct formatting for email addresses')
     for i in range(0,repeat):
         sendemail(from_addr    = sending_email,
                   to_addr_list = email_recipient_list,
