@@ -45,6 +45,7 @@ def sendemail(from_addr, to_addr_list,
     server.login(login, password)
     problems = server.sendmail(from_addr, to_addr_list, message)
     server.quit()
+
     return problems
 
 def popupmsg(msg):
@@ -71,6 +72,8 @@ def spamEmailsButton():
 
     email_recipient = email.get()
     email_recipient_list = email_recipient.split(",")
+    for i in range(0,len(email_recipient_list)):
+        email_recipient_list[i-1].strip(" ")
     for person in email_recipient_list:
         try:
             assert "@" in person
@@ -85,6 +88,8 @@ def spamEmailsButton():
                   message      = text,
                   login        = sending_email,
                   password     = password)
+
+    popupmsg("Email Sent")
 
 
 def on_entry_click(event):
