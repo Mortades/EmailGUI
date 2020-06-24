@@ -65,7 +65,6 @@ def spamEmailsButton():
     sending_email, password = readCredentials("Credentials.txt")
     text = txt_edit.get(1.0, tk.END)
     email_subject =  subject.get()
-
     repeat = number_of_times.get()
     try:
         repeat = int(repeat)
@@ -83,6 +82,10 @@ def spamEmailsButton():
             assert "." in person
         except AssertionError:
             popupmsg('Please use the correct formatting for email addresses')
+        try:
+            assert person.count("@") < 2
+        except AssertionError:
+            popupmsg('Remember to seperate multiple email addresses with commas')
     for i in range(0,repeat):
         sendemail(from_addr    = sending_email,
                   to_addr_list = email_recipient_list,
