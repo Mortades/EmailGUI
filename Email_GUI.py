@@ -4,7 +4,6 @@ import smtplib
 from readEmailCredentials import readCredentials
 from tkinter import ttk
 
-
 def open_file():
     filepath = askopenfilename(
         filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
@@ -46,7 +45,11 @@ def sendemail(from_addr, to_addr_list,
     problems = server.sendmail(from_addr, to_addr_list, message)
     server.quit()
 
-    return problems
+    if len(problems) == 0:
+        bOk = 1
+    else:
+        bOk = 0
+    return bOk
 
 def popupmsg(msg):
     popup = tk.Tk()
@@ -180,5 +183,5 @@ fr_buttons.grid(row=0, column=0, sticky="ns") #Sets the frame 'fr_buttons' to th
 txt_edit.grid(row=0, column=1, sticky="nw",padx=5, pady=5) #Sets the order of buttons in the second column of the grrid
 
 
-
-window.mainloop()
+if __name__ == '__main__':
+    window.mainloop()
