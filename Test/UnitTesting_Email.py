@@ -14,7 +14,7 @@ class Test_email(unittest.TestCase):
         self.assertEqual(password, 'dfhdfhdfgsdfds!"$%^&*', "Email address is wrong")
 
     def testSendEmail(self):
-        login, password = readCredentials("Credential1.txt")
+        login, password = readCredentials("Credentials.txt")
         Error = sendemail(login, login,
                   'Subject', 'Message',
                   login, password,
